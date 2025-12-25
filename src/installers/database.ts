@@ -1,62 +1,38 @@
 import fs from 'fs-extra'
 import path from 'path'
 import type { DatabaseInstallerOptions } from '../types.js'
+import { EXTRAS_DIR } from '../helpers/index.js'
 import { createSpinner } from '../utils/logger.js'
-
-const DB_CONFIGS = {
-  mongodb: {
-    package: '@payloadcms/db-mongodb',
-    remove: '@payloadcms/db-postgres',
-    importStatement: "import { mongooseAdapter } from '@payloadcms/db-mongodb'",
-    adapterCall: `mongooseAdapter({
-    url: process.env.DATABASE_URL || '',
-  })`,
-  },
-  sqlite: {
-    package: '@payloadcms/db-sqlite',
-    remove: '@payloadcms/db-postgres',
-    importStatement: "import { sqliteAdapter } from '@payloadcms/db-sqlite'",
-    adapterCall: `sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URL || 'file:./payload.db',
-    },
-  })`,
-  },
-} as const
 
 export async function installDatabase(options: DatabaseInstallerOptions): Promise<void> {
   const { projectDir, database } = options
-  const config = DB_CONFIGS[database]
 
   const spinner = createSpinner(`Configuring ${database} adapter...`).start()
 
   try {
-    // 1. Update package.json dependencies
+    // 1. Copy the db adapter file from extras
+    const dbSource = path.join(EXTRAS_DIR, 'src', 'db', `${database}.ts`)
+    const dbDest = path.join(projectDir, 'src', 'db', 'index.ts')
+
+    await fs.copy(dbSource, dbDest)
+
+    // 2. Load dependencies config
+    const depsConfig = await fs.readJson(path.join(EXTRAS_DIR, 'config', 'dependencies.json'))
+    const dbConfig = depsConfig[database]
+
+    // 3. Update package.json
     const pkgPath = path.join(projectDir, 'package.json')
     const pkg = await fs.readJson(pkgPath)
 
-    delete pkg.dependencies[config.remove]
-    pkg.dependencies[config.package] = 'latest'
+    // Remove old dependencies
+    for (const dep of dbConfig.remove || []) {
+      delete pkg.dependencies[dep]
+    }
+
+    // Add new dependencies
+    Object.assign(pkg.dependencies, dbConfig.add)
 
     await fs.writeJson(pkgPath, pkg, { spaces: 2 })
-
-    // 2. Update payload.config.ts
-    const configPath = path.join(projectDir, 'src/payload.config.ts')
-    let configFile = await fs.readFile(configPath, 'utf-8')
-
-    // Replace import statement
-    configFile = configFile.replace(
-      /import \{ postgresAdapter \} from '@payloadcms\/db-postgres'/,
-      config.importStatement
-    )
-
-    // Replace adapter call
-    configFile = configFile.replace(
-      /postgresAdapter\(\{[\s\S]*?pool:[\s\S]*?\}\s*,?\s*\}\)/,
-      config.adapterCall
-    )
-
-    await fs.writeFile(configPath, configFile)
 
     spinner.succeed(`Configured ${database} adapter`)
   } catch (error) {

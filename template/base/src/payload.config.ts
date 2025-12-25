@@ -9,7 +9,7 @@ import { Users } from '@/collections/users/users.config'
 import { defaultLexical } from '@/fields/default-lexical'
 import { Footer } from '@/globals/footer/footer.config'
 import { Header } from '@/globals/header/header.config'
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { db } from '@/db'
 import { buildConfig, PayloadRequest } from 'payload'
 import sharp from 'sharp'
 
@@ -50,11 +50,7 @@ export default buildConfig({
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URL || '',
-    },
-  }),
+  db,
   collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],

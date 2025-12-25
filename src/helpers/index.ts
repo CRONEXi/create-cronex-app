@@ -1,4 +1,4 @@
-export { cloneTemplate } from './clone-template.js'
+export { cloneTemplate, BASE_DIR, EXTRAS_DIR } from './clone-template.js'
 export { generateEnv } from './generate-env.js'
 export { initGit } from './init-git.js'
 export { installDependencies } from './install-deps.js'
