@@ -1,0 +1,51 @@
+{
+  "name": "create-cronex-app",
+  "version": "0.1.0",
+  "description": "Create a new Payload CMS + Next.js project with the Cronex template",
+  "type": "module",
+  "bin": {
+    "create-cronex-app": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "payload",
+    "cms",
+    "nextjs",
+    "template",
+    "cli",
+    "create-app"
+  ],
+  "author": "CRONEXi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CRONEXi/create-cronex-app"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.10.0",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "degit": "^2.8.4",
+    "fs-extra": "^11.3.0",
+    "ora": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/degit": "^2.8.6",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.15.29",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
