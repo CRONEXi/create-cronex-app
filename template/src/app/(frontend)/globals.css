@@ -1,0 +1,140 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@import "./theme.css";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark));
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground min-h-screen flex flex-col;
+  }
+}
+
+.prose {
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-lead: var(--muted-foreground);
+  --tw-prose-links: var(--primary);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted-foreground);
+  --tw-prose-bullets: var(--muted-foreground);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-quote-borders: var(--border);
+  --tw-prose-captions: var(--muted-foreground);
+  --tw-prose-code: var(--foreground);
+  --tw-prose-pre-code: var(--foreground);
+  --tw-prose-pre-bg: var(--muted);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+}
+
+@utility container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+
+  @variant xs {
+    max-width: 100%;
+    padding-inline: var(--container-pad);
+  }
+
+  @variant sm {
+    max-width: 100%;
+    padding-inline: var(--container-pad-sm);
+  }
+
+  @variant md {
+    max-width: 100%;
+    padding-inline: var(--container-pad-md);
+  }
+
+  @variant lg {
+    max-width: 100%;
+    padding-inline: var(--container-pad-lg);
+  }
+
+  @variant xl {
+    max-width: var(--breakpoint-xl);
+    padding-inline: var(--container-pad-xl);
+  }
+}
+
+@theme inline {
+  --default-transition-duration: 0.3s;
+
+  /* 512 px */
+  --breakpoint-xs: 32rem;
+  /* 640 px  */
+  --breakpoint-sm: 40rem;
+  /* 768 px  */
+  --breakpoint-md: 48rem;
+  /* 1024 px */
+  --breakpoint-lg: 64rem;
+  /* 1280 px */
+  --breakpoint-xl: 80rem;
+  /* 1376 px */
+  --breakpoint-2xl: 86rem;
+
+  --container-pad: 1rem;
+  --container-pad-sm: 1rem;
+  --container-pad-md: 2rem;
+  --container-pad-lg: 2rem;
+  --container-pad-xl: 2rem;
+  --container-pad-2xl: 2rem;
+  --radius-sm: calc(var(--radius) - 14px);
+  --radius-md: calc(var(--radius) - 12px);
+  --radius-lg: calc(var(--radius) - 8px);
+  --radius-xl: var(--radius);
+  --radius-full-flexible: calc(var(--radius) * 9999);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-info: var(--info);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+}

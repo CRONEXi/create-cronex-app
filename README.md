@@ -1,6 +1,6 @@
 # create-cronex-app
 
-Create a new Payload CMS + Next.js project with the Cronex template.
+Create a new Payload CMS + Next.js project with a single command.
 
 ## Usage
 
@@ -55,6 +55,43 @@ When using `--yes`:
 - Package manager: pnpm
 - Git: initialized
 
+## What's Included
+
+The template includes:
+
+- **Payload CMS 3.x** - Headless CMS with admin panel
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Full type safety
+- **Tailwind CSS 4** - Utility-first CSS
+- **shadcn/ui** - UI components
+- **PostgreSQL/MongoDB/SQLite** - Database adapters
+- **Live Preview** - Real-time content preview
+- **SEO Plugin** - Meta tags and sitemap generation
+- **Form Builder** - Dynamic form creation
+- **Search Plugin** - Full-text search
+
+### Optional Features
+
+- **better-auth** - Modern authentication with social logins
+- **tRPC** - End-to-end type-safe APIs
+
+## Project Structure
+
+```
+my-project/
+├── src/
+│   ├── app/                 # Next.js App Router
+│   │   ├── (frontend)/      # Public routes
+│   │   └── (payload)/       # Admin panel
+│   ├── collections/         # Payload collections
+│   ├── globals/             # Payload globals
+│   ├── blocks/              # Content blocks
+│   ├── components/          # React components
+│   └── payload.config.ts    # Payload configuration
+├── public/                  # Static assets
+└── .env                     # Environment variables
+```
+
 ## After Creation
 
 ```bash
@@ -64,6 +101,16 @@ pnpm dev
 ```
 
 Open http://localhost:3000
+
+## Repository Structure
+
+```
+create-cronex-app/
+├── src/           # CLI source code
+├── template/      # Payload + Next.js template
+├── dist/          # Compiled CLI
+└── package.json
+```
 
 ## License
 
