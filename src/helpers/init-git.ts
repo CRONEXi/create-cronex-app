@@ -1,5 +1,5 @@
 import { spawn } from 'child_process'
-import { createSpinner, logger } from '../utils/logger.js'
+import { createSpinner } from '../utils/logger.js'
 
 function runGitCommand(args: string[], cwd: string): Promise<{ success: boolean; error?: string }> {
   return new Promise((resolve) => {

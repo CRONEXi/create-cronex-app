@@ -63,15 +63,13 @@ export async function runPrompts(options: PromptOptions): Promise<ProjectConfig 
 
   // Features selection
   let features = {
-    betterAuth: flags.betterAuth || false,
     trpc: flags.trpc || false,
   }
 
-  if (!flags.betterAuth && !flags.trpc) {
+  if (!flags.trpc) {
     const featuresResult = await p.multiselect({
       message: 'Additional features',
       options: [
-        { value: 'betterAuth', label: 'better-auth', hint: 'Advanced authentication' },
         { value: 'trpc', label: 'tRPC', hint: 'Type-safe API layer' },
       ],
       required: false,
@@ -83,7 +81,6 @@ export async function runPrompts(options: PromptOptions): Promise<ProjectConfig 
     }
 
     features = {
-      betterAuth: (featuresResult as string[]).includes('betterAuth'),
       trpc: (featuresResult as string[]).includes('trpc'),
     }
   }

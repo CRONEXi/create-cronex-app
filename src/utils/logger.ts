@@ -25,13 +25,18 @@ export function title() {
 }
 
 export function nextSteps(projectName: string, packageManager: string) {
+  const runCmd = packageManager === 'npm' ? 'npm run' : packageManager
+
   console.log()
   console.log(chalk.bold('  Next steps:'))
   console.log()
-  console.log(chalk.dim('  1.'), `cd ${projectName}`)
-  console.log(chalk.dim('  2.'), 'Update .env with your database credentials')
-  console.log(chalk.dim('  3.'), `${packageManager} dev`)
+
+  let step = 1
+
+  console.log(chalk.dim(`  ${step++}.`), `cd ${projectName}`)
+  console.log(chalk.dim(`  ${step++}.`), 'Start your database (e.g., docker-compose up -d)')
+  console.log(chalk.dim(`  ${step++}.`), `${runCmd} dev`)
   console.log()
-  console.log(chalk.dim('  Open'), chalk.cyan('http://localhost:3000'))
+  console.log(chalk.dim('  Open'), chalk.cyan('http://localhost:3000/admin'), chalk.dim('to create your first admin user'))
   console.log()
 }

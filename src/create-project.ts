@@ -8,7 +8,7 @@ import {
   installDependencies,
   updatePackageName,
 } from './helpers/index.js'
-import { installBetterAuth, installDatabase, installTrpc } from './installers/index.js'
+import { installDatabase, installTrpc } from './installers/index.js'
 import type { ProjectConfig } from './types.js'
 import { nextSteps } from './utils/logger.js'
 
@@ -40,25 +40,18 @@ export async function createProject(config: ProjectConfig): Promise<void> {
       await installDatabase({ projectDir, database: config.database })
     }
 
-    // 4. Install better-auth if selected
-    if (config.features.betterAuth) {
-      await installBetterAuth({ projectDir })
-    }
-
-    // 5. Install tRPC if selected
+    // 4. Install tRPC if selected
     if (config.features.trpc) {
       await installTrpc({ projectDir })
     }
 
-    // 6. Generate .env file with secrets
-    await generateEnv(projectDir, config.database, {
-      betterAuth: config.features.betterAuth,
-    })
+    // 5. Generate .env file with secrets
+    await generateEnv(projectDir, config.database)
 
-    // 7. Install dependencies
+    // 6. Install dependencies
     await installDependencies(projectDir, config.packageManager)
 
-    // 8. Initialize git repository
+    // 7. Initialize git repository
     if (config.initGit) {
       await initGit(projectDir)
     }

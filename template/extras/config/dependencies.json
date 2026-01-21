@@ -1,13 +1,13 @@
 {
   "mongodb": {
     "add": {
-      "@payloadcms/db-mongodb": "3.69.0"
+      "@payloadcms/db-mongodb": "3.72.0"
     },
     "remove": ["@payloadcms/db-postgres"]
   },
   "sqlite": {
     "add": {
-      "@payloadcms/db-sqlite": "3.69.0"
+      "@payloadcms/db-sqlite": "3.72.0"
     },
     "remove": ["@payloadcms/db-postgres"]
   },
@@ -18,11 +18,6 @@
       "@trpc/react-query": "^11.0.0",
       "@tanstack/react-query": "^5.0.0",
       "superjson": "^2.2.0"
-    }
-  },
-  "better-auth": {
-    "add": {
-      "better-auth": "^1.2.0"
     }
   }
 }

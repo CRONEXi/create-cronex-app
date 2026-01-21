@@ -1,0 +1,8 @@
+# SQLite doesn't require a Docker container - it uses a local file.
+# This file is a placeholder. The database will be created at ./payload.db
+#
+# To use SQLite, simply run your application - the database file will be
+# created automatically on first run.
+#
+# Note: SQLite is recommended for development only. For production,
+# consider using PostgreSQL or MongoDB.

@@ -16,11 +16,17 @@ export async function installDatabase(options: DatabaseInstallerOptions): Promis
 
     await fs.copy(dbSource, dbDest)
 
-    // 2. Load dependencies config
+    // 2. Copy the database-specific docker-compose file
+    const dockerSource = path.join(EXTRAS_DIR, 'docker', `docker-compose.${database}.yml`)
+    const dockerDest = path.join(projectDir, 'docker-compose.yml')
+
+    await fs.copy(dockerSource, dockerDest)
+
+    // 3. Load dependencies config
     const depsConfig = await fs.readJson(path.join(EXTRAS_DIR, 'config', 'dependencies.json'))
     const dbConfig = depsConfig[database]
 
-    // 3. Update package.json
+    // 4. Update package.json
     const pkgPath = path.join(projectDir, 'package.json')
     const pkg = await fs.readJson(pkgPath)
 

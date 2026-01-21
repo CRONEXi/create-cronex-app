@@ -5,7 +5,6 @@ export interface ProjectConfig {
   name: string
   database: Database
   features: {
-    betterAuth: boolean
     trpc: boolean
   }
   packageManager: PackageManager
@@ -14,7 +13,6 @@ export interface ProjectConfig {
 
 export interface CLIFlags {
   database?: Database
-  betterAuth?: boolean
   trpc?: boolean
   packageManager?: PackageManager
   git?: boolean

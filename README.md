@@ -72,7 +72,7 @@ The template includes:
 
 ### Optional Features
 
-- **better-auth** - Modern authentication with social logins
+- **better-auth** - Modern authentication with social logins, replacing Payload's native auth
 - **tRPC** - End-to-end type-safe APIs
 
 ## Project Structure
@@ -87,27 +87,70 @@ my-project/
 │   ├── globals/             # Payload globals
 │   ├── blocks/              # Content blocks
 │   ├── components/          # React components
+│   ├── lib/                 # Utilities (auth, etc.)
 │   └── payload.config.ts    # Payload configuration
 ├── public/                  # Static assets
 └── .env                     # Environment variables
 ```
 
-## After Creation
+## Getting Started
+
+### Basic Setup
 
 ```bash
 cd my-project
-# Update .env with your database credentials
-pnpm dev
+docker-compose up -d        # Start database (PostgreSQL/MongoDB)
+pnpm dev                    # Start dev server
 ```
 
-Open http://localhost:3000
+Open http://localhost:3000/admin to create your first admin user.
+
+### With Better-Auth
+
+If you selected better-auth, run the auth migration before starting:
+
+```bash
+cd my-project
+docker-compose up -d        # Start database
+pnpm db:auth:migrate        # Create better-auth tables
+pnpm dev                    # Start dev server
+```
+
+Then visit http://localhost:3000/admin and:
+1. Click "Create Account" tab
+2. Enter your email and password
+3. The first user automatically becomes admin
+
+## Database Migrations
+
+This template uses `push: true` by default, which means Payload automatically creates and syncs tables on startup. This is ideal for development.
+
+For production, you may want to use migrations instead:
+
+```bash
+pnpm payload migrate:create   # Create a new migration
+pnpm payload migrate          # Run pending migrations
+```
+
+To switch to migration-based workflow, set `push: false` in `src/db/index.ts`.
+
+## Environment Variables
+
+The CLI automatically generates a `.env` file with:
+
+- `DATABASE_URL` - Database connection string
+- `PAYLOAD_SECRET` - Secret for Payload JWT
+- `NEXT_PUBLIC_SERVER_URL` - Server URL for CORS
+- `BETTER_AUTH_SECRET` - Secret for better-auth (if enabled)
 
 ## Repository Structure
 
 ```
 create-cronex-app/
 ├── src/           # CLI source code
-├── template/      # Payload + Next.js template
+├── template/
+│   ├── base/      # Base Payload + Next.js template
+│   └── extras/    # Optional feature files (better-auth, tRPC, db adapters)
 ├── dist/          # Compiled CLI
 └── package.json
 ```

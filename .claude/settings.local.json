@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:finly.ch)",
+      "Bash(dir:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run build:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm run typecheck:extras:*)",
+      "Bash(pnpm run typecheck:all:*)",
+      "Bash(pnpm run build)",
+      "WebFetch(domain:www.better-auth.com)",
+      "Bash(node:*)",
+      "Bash(cat:*)",
+      "Bash(docker exec:*)",
+      "Bash(npx @better-auth/cli generate:*)",
+      "WebSearch",
+      "WebFetch(domain:www.payloadauth.com)",
+      "WebFetch(domain:payloadcms.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:deepwiki.com)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}

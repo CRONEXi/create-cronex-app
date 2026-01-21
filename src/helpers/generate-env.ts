@@ -10,68 +10,40 @@ function generateSecret(length: number = 32): string {
 function getDatabaseUrl(database: Database): string {
   switch (database) {
     case 'mongodb':
-      return 'mongodb://localhost:27017/payload'
+      // Use 127.0.0.1 instead of localhost to avoid IPv6 issues with Docker
+      return 'mongodb://127.0.0.1:27017/payload'
     case 'sqlite':
       return 'file:./payload.db'
     case 'postgres':
     default:
-      return 'postgresql://postgres:postgres@localhost:5432/payload'
+      // Use 127.0.0.1 instead of localhost to avoid IPv6 issues with Docker
+      // Matches docker-compose.postgres.yml credentials
+      return 'postgresql://payload:payload@127.0.0.1:5432/payload'
   }
 }
 
-export async function generateEnv(
-  projectDir: string,
-  database: Database,
-  options: { betterAuth?: boolean } = {}
-): Promise<void> {
+export async function generateEnv(projectDir: string, database: Database): Promise<void> {
   const envPath = path.join(projectDir, '.env')
-  const envExamplePath = path.join(projectDir, '.env.example')
 
-  // Read .env.example if it exists
-  let envContent = ''
-  if (await fs.pathExists(envExamplePath)) {
-    envContent = await fs.readFile(envExamplePath, 'utf-8')
-  }
-
-  // Replace placeholders with actual values
+  // Generate all secrets
   const payloadSecret = generateSecret()
   const cronSecret = generateSecret(16)
   const previewSecret = generateSecret(16)
   const databaseUrl = getDatabaseUrl(database)
 
-  // Update DATABASE_URL
-  envContent = envContent.replace(
-    /DATABASE_URL=.*/,
-    `DATABASE_URL=${databaseUrl}`
-  )
+  const envContent = `# Database
+DATABASE_URL=${databaseUrl}
 
-  // Update PAYLOAD_SECRET
-  envContent = envContent.replace(
-    /PAYLOAD_SECRET=.*/,
-    `PAYLOAD_SECRET=${payloadSecret}`
-  )
+# Payload
+PAYLOAD_SECRET=${payloadSecret}
 
-  // Update CRON_SECRET if present
-  if (envContent.includes('CRON_SECRET=')) {
-    envContent = envContent.replace(
-      /CRON_SECRET=.*/,
-      `CRON_SECRET=${cronSecret}`
-    )
-  }
+# Server URL (used for CORS, links, etc.)
+NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 
-  // Update PREVIEW_SECRET if present
-  if (envContent.includes('PREVIEW_SECRET=')) {
-    envContent = envContent.replace(
-      /PREVIEW_SECRET=.*/,
-      `PREVIEW_SECRET=${previewSecret}`
-    )
-  }
-
-  // Add better-auth secret if needed
-  if (options.betterAuth) {
-    const betterAuthSecret = generateSecret()
-    envContent += `\n# better-auth\nBETTER_AUTH_SECRET=${betterAuthSecret}\n`
-  }
+# Preview & Cron secrets
+PREVIEW_SECRET=${previewSecret}
+CRON_SECRET=${cronSecret}
+`
 
   await fs.writeFile(envPath, envContent)
 }

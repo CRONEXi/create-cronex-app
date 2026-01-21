@@ -15,7 +15,6 @@ export function createCLI() {
     .version('0.1.0')
     .argument('[project-name]', 'Name of the project')
     .option('-d, --database <type>', `Database adapter (${VALID_DATABASES.join(', ')})`)
-    .option('--better-auth', 'Include better-auth for authentication')
     .option('--trpc', 'Include tRPC for type-safe API')
     .option('-p, --package-manager <pm>', `Package manager (${VALID_PACKAGE_MANAGERS.join(', ')})`)
     .option('--git', 'Initialize git repository')
@@ -40,7 +39,6 @@ export function createCLI() {
           name: projectName || 'my-cronex-app',
           database: options.database || 'postgres',
           features: {
-            betterAuth: options.betterAuth || false,
             trpc: options.trpc || false,
           },
           packageManager: options.packageManager || 'pnpm',

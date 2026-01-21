@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@payload-config": ["./src/_stubs/payload.config.ts"],
+      "@/*": ["./src/*"],
+      "@/payload-types": ["./src/_stubs/payload-types.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
