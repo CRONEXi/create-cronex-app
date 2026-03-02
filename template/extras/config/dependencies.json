@@ -1,13 +1,13 @@
 {
   "mongodb": {
     "add": {
-      "@payloadcms/db-mongodb": "3.72.0"
+      "@payloadcms/db-mongodb": "3.78.0"
     },
     "remove": ["@payloadcms/db-postgres"]
   },
   "sqlite": {
     "add": {
-      "@payloadcms/db-sqlite": "3.72.0"
+      "@payloadcms/db-sqlite": "3.78.0"
     },
     "remove": ["@payloadcms/db-postgres"]
   },
